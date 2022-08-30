@@ -24,7 +24,7 @@ class Contact < ApplicationRecord
     # def birthdate_br
     #     I18n.l(self.birthdate) unless self.birthdate.blank?
     # end
-
+ #ok
     def to_br
         {
             name: self.name,  
