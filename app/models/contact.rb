@@ -1,5 +1,7 @@
 class Contact < ApplicationRecord
+    #associacoes
     belongs_to :kind, optional: true
+    has_many :phones
 
     # def author
     #     "Thyagomoura"
