@@ -1,6 +1,8 @@
 namespace :dev do
   desc "Configura o ambiente de desenvolvimento"
   task setup: :environment do
+    puts("Atualizando banco de dados")
+    %x(rails db:drop db:create db:migrate)
 
     puts "Cadastrando os tipos de contato..."
 
@@ -31,7 +33,7 @@ namespace :dev do
 
   #########################################################
 
-  puts "Cadastrando telefones..."
+    puts "Cadastrando telefones..."
 
     Contact.all.each do |contact|
       Random.rand(5).times do |i|
@@ -41,5 +43,16 @@ namespace :dev do
       end
     end
     puts "Telefones cadastrados"
+
+    #########################################################
+    puts "Cadastrando endereço..."
+    Contact.all.each do |contact|
+      Address.create(
+        street: Faker::Address.street_address,  
+        city: Faker::Address.city,  
+        contact: contact
+      )
+    end
+    puts "Endereços cadastrados"
   end
 end

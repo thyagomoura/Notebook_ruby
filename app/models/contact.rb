@@ -2,9 +2,11 @@ class Contact < ApplicationRecord
     #associacoes
     belongs_to :kind
     has_many :phones
+    has_one :address
 
     #nested 
     accepts_nested_attributes_for :phones, allow_destroy: true
+    accepts_nested_attributes_for :address, update_only: true
 
     def as_json(options = {})
         h = super(options)
