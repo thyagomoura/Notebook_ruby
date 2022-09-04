@@ -44,15 +44,18 @@ class ContactsController < ApplicationController
       @contact = Contact.find(params[:id])
     end
 
+    #parametros que sao passados no json
     # Only allow a list of trusted parameters through.
     def contact_params
-      params.require(:contact).permit(
-        :name, 
-        :email, 
-        :birthdate, 
-        :kind_id, 
-        phones_attributes: [:id, :number, :_destroy],
-        address_attributes: [:id, :street, :city]
-      )
+      # params.require(:contact).permit(
+      #   :name, 
+      #   :email, 
+      #   :birthdate, 
+      #   :kind_id, 
+      #   phones_attributes: [:id, :number, :_destroy],
+      #   address_attributes: [:id, :street, :city]
+      # )
+      #conversao do json em algo que o ruby interprete
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
 end
