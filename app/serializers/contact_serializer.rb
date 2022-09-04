@@ -8,9 +8,12 @@ class ContactSerializer < ActiveModel::Serializer
 
   #aqui temos a especificação da relação entre contact e os associados
   has_many :phones do
-    link(:related) {contact_kind_url(object.id)}
+    link(:related) {contact_phones_url(object.id)}
   end
-  has_one :address
+  
+  has_one :address do
+    link(:related) {contact_address_url(object.id)}
+  end
 
   #aqui é realizado a conversao da data para o padrão Iso8601
   def attributes(*args)
