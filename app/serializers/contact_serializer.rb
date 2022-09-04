@@ -3,11 +3,13 @@ class ContactSerializer < ActiveModel::Serializer
   
   #aqui temos a associação do kind com seu url para especificar no json da req
   belongs_to :kind do
-    link(:related) {kind_url(object.kind.id)}
+    link(:related) {contact_kind_url(object.id)}
   end
 
   #aqui temos a especificação da relação entre contact e os associados
-  has_many :phones
+  has_many :phones do
+    link(:related) {contact_kind_url(object.id)}
+  end
   has_one :address
 
   #aqui é realizado a conversao da data para o padrão Iso8601
