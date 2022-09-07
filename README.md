@@ -1,24 +1,35 @@
-# README
+# Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Install
 
-* Ruby version
+### Clone the repository
 
-* System dependencies
+```shell
+git clone https://github.com/thyagomoura/Notebook_ruby.git
+cd project
+```
 
-* Configuration
+### Check your Ruby version
 
-* Database creation
+```shell
+ruby -v
+```
 
-* Database initialization
+### Install dependencies
 
-* How to run the test suite
+Using [Bundler](https://github.com/bundler/bundler):
 
-* Services (job queues, cache servers, search engines, etc.)
+```shell
+bundle
+```
 
-* Deployment instructions
+```shell
+rails db:drop db:create db:migrate dev:setup
+```
 
-* ...
+## Serve
+
+```shell
+rails s
+```
