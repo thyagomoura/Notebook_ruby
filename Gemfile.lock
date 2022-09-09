@@ -95,6 +95,7 @@ GEM
     irb (1.4.1)
       reline (>= 0.3.0)
     jsonapi-renderer (0.2.2)
+    jwt (2.5.0)
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -187,6 +188,7 @@ DEPENDENCIES
   debug
   faker
   foreman
+  jwt
   pry-rails
   puma (~> 5.0)
   rack-cors
