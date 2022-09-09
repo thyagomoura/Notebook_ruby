@@ -1,13 +1,16 @@
 
 class KindsController < ApplicationController
 
+  TOKEN = "s1e2c3r4e5t"
+  include ActionController::HttpAuthentication::Token::ControllerMethods
+
   #basic
   # include ActionController::HttpAuthentication::Basic::ControllerMethods
   # http_basic_authenticate_with name: "thyago", password: "secret"
 
   #digest
-  include ActionController::HttpAuthentication::Digest::ControllerMethods
-  USERS = { "thyago" => Digest::MD5.hexdigest(["thyago","Application","secret"].join(":"))}
+  # include ActionController::HttpAuthentication::Digest::ControllerMethods
+  # USERS = { "thyago" => Digest::MD5.hexdigest(["thyago","Application","secret"].join(":"))}
   before_action :authenticate
   before_action :set_kind, only: %i[ show update destroy ]
 
@@ -59,14 +62,23 @@ class KindsController < ApplicationController
       @kind = Kind.find(params[:id])
     end
 
+    # def authenticate
+    #   authenticate_or_request_with_http_digest("Application") do |username|
+    #     USERS[username]
+    #   end
+    # end
+
     def authenticate
-      authenticate_or_request_with_http_digest("Application") do |username|
-        USERS[username]
+      authenticate_or_request_with_http_token do |token, option|
+        ActiveSupport::SecurityUtils.secure_compare(
+          ::Digest::SHA256.hexdigest(token),
+          ::Digest::SHA256.hexdigest(TOKEN)
+        )
       end
     end
 
     # Only allow a list of trusted parameters through.
     def kind_params
       params.require(:kind).permit(:description)
-    end
+    end 
 end
