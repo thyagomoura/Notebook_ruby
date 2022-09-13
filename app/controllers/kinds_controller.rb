@@ -1,8 +1,9 @@
 
 class KindsController < ApplicationController
 
-  TOKEN = "s1e2c3r4e5t"
-  include ActionController::HttpAuthentication::Token::ControllerMethods
+  before_action :authenticate_user!
+  #TOKEN = "s1e2c3r4e5t"
+  #include ActionController::HttpAuthentication::Token::ControllerMethods
 
   #basic
   # include ActionController::HttpAuthentication::Basic::ControllerMethods
@@ -11,7 +12,7 @@ class KindsController < ApplicationController
   #digest
   # include ActionController::HttpAuthentication::Digest::ControllerMethods
   # USERS = { "thyago" => Digest::MD5.hexdigest(["thyago","Application","secret"].join(":"))}
-  before_action :authenticate
+  #before_action :authenticate
   before_action :set_kind, only: %i[ show update destroy ]
 
   # GET /kinds
@@ -68,14 +69,16 @@ class KindsController < ApplicationController
     #   end
     # end
 
-    def authenticate
-      authenticate_or_request_with_http_token do |token, option|
-        ActiveSupport::SecurityUtils.secure_compare(
-          ::Digest::SHA256.hexdigest(token),
-          ::Digest::SHA256.hexdigest(TOKEN)
-        )
-      end
-    end
+    # def authenticate
+    #   authenticate_or_request_with_http_token do |token, option|
+    #     hmac_secret = 'my$ecretK3y'
+    #     JWT.decode token, hmac_secret, true, { :algorithm => 'HS256' }
+    #   #   ActiveSupport::SecurityUtils.secure_compare(
+    #   #     ::Digest::SHA256.hexdigest(token),
+    #   #     ::Digest::SHA256.hexdigest(TOKEN)
+    #   #   )
+    #   end
+    # end
 
     # Only allow a list of trusted parameters through.
     def kind_params
